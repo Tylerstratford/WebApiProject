@@ -52,16 +52,29 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerEntity>> GetCustomerEntity(int id)
+        public async Task<ActionResult<CustomerModel>> GetCustomerEntity(int id)
         {
-            var customerEntity = await _context.Customer.FindAsync(id);
+            var customerEntity = await _context.Customer.Include(x =>x.Address).FirstOrDefaultAsync(x => x.Id == id);
 
             if (customerEntity == null)
             {
                 return NotFound();
             }
 
-            return customerEntity;
+            return new CustomerModel(
+                customerEntity.Id,
+                customerEntity.FirstName,
+                customerEntity.LastName,
+                customerEntity.Email,
+                customerEntity.TelephoneNumber,
+                customerEntity.DateCreated,
+                customerEntity.AddressId,
+                new AddressModel(
+                    customerEntity.Address.Id,
+                    customerEntity.Address.StreetName,
+                    customerEntity.Address.PostalCode,
+                    customerEntity.Address.City,
+                    customerEntity.Address.Country));
         }
 
         // PUT: api/Customer/5
@@ -70,23 +83,23 @@ namespace WebApiProject.Controllers
         public async Task<IActionResult> PutCustomerEntity(int id, CustomerUpdateModel model)
         {
 
-            if (id != model.id)
+            if (id != model.Id)
             {
-                return BadRequest();
+                return BadRequest("No customer with entered ID was found...");
             }
 
-            var customerEntity = await _context.Customer.FindAsync(model.id);
+            var customerEntity = await _context.Customer.FindAsync(model.Id);
 
             if (customerEntity == null)
             {
-                return BadRequest();
+                return BadRequest("No ID entered...");
             }
 
             customerEntity.FirstName = model.FirstName;
             customerEntity.LastName = model.LastName;
             customerEntity.Email = model.Email;
             customerEntity.TelephoneNumber = model.TelephoneNumber;
-            customerEntity.Password = model.Password;
+            customerEntity.CreateSecurePassword(model.Password);
             customerEntity.Address = new AddressEntity(
                 model.StreetName,
                 model.PostalCode,
@@ -128,13 +141,8 @@ namespace WebApiProject.Controllers
                 model.LastName,
                 model.Email,
                 model.TelephoneNumber,
-                model.Password,
                 model.DateCreated);
-                //new AddressEntity(
-                //    model.StreetName,
-                //    model.PostalCode,
-                //    model.City,
-                //    model.Country));
+            customerEntity.CreateSecurePassword(model.Password);
 
             var address = await _context.Address.FirstOrDefaultAsync(x => x.StreetName == model.StreetName && x.PostalCode == model.PostalCode);
             if (address != null)
@@ -180,7 +188,7 @@ namespace WebApiProject.Controllers
             customerEntity.LastName = "Deleted";
             customerEntity.Email = "Deleted";
             customerEntity.TelephoneNumber = "Deleted";
-            customerEntity.Password = "Deleted";
+            customerEntity.CreateSecurePassword("Deleted");
             customerEntity.DateUpdated = DateTime.Now;  
         
 

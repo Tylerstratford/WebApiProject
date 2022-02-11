@@ -14,7 +14,7 @@ namespace WebApiProject.Models.CustomerModels
         private string city;
         private string country;
 
-        public int id { get; set; }
+        public int Id { get; set; }
         public string FirstName
         {
             get { return firstName; }

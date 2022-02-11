@@ -22,6 +22,7 @@ namespace WebApiProject.Data
         public DbSet<OrdersEntity> Orders { get; set; }
         public DbSet<OrderStatusEntity> OrderStatuses { get; set; }
         public DbSet<ProductEntity> Products { get; set; }  
+        public DbSet<AdminEntity> Admins { get; set; }
 
     
     }

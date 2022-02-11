@@ -5,6 +5,11 @@ namespace WebApiProject.Models.Entities
 {
     public class OrderStatusEntity
     {
+        public OrderStatusEntity(string status)
+        {
+            Status = status;
+        }
+
         [Key]
         public int Id { get; set; }
 
