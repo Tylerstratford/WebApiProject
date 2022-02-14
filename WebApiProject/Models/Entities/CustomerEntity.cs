@@ -7,6 +7,10 @@ namespace WebApiProject.Models.Entities
 {
     public class CustomerEntity
     {
+        public CustomerEntity()
+        {
+
+        }
         public CustomerEntity(string firstName, string lastName, string email, string telephoneNumber, DateTime dateCreated)
         {
             FirstName = firstName;

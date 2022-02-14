@@ -5,6 +5,10 @@ namespace WebApiProject.Models.Entities
 {
     public class OrderStatusEntity
     {
+        public OrderStatusEntity()
+        {
+
+        }
         public OrderStatusEntity(string status)
         {
             Status = status;

@@ -12,14 +12,14 @@ using WebApiProject.Data;
 namespace WebApiProject.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20220211150514_init")]
+    [Migration("20220214194714_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -265,7 +265,7 @@ namespace WebApiProject.Migrations
             modelBuilder.Entity("WebApiProject.Models.Entities.OrderLinesEntity", b =>
                 {
                     b.HasOne("WebApiProject.Models.Entities.OrdersEntity", "Order")
-                        .WithMany()
+                        .WithMany("Lines")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -324,6 +324,11 @@ namespace WebApiProject.Migrations
             modelBuilder.Entity("WebApiProject.Models.Entities.CustomerEntity", b =>
                 {
                     b.Navigation("OrdersList");
+                });
+
+            modelBuilder.Entity("WebApiProject.Models.Entities.OrdersEntity", b =>
+                {
+                    b.Navigation("Lines");
                 });
 
             modelBuilder.Entity("WebApiProject.Models.Entities.OrderStatusEntity", b =>

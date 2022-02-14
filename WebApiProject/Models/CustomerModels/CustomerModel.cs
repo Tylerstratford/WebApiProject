@@ -31,6 +31,10 @@ namespace WebApiProject.Models.CustomerModels
             CreatedDate = createdDate;
         }
 
+        public CustomerModel(int id)
+        {
+            Id = id;
+        }
 
         public int Id { get; set; }
         public string FirstName { get; set; }

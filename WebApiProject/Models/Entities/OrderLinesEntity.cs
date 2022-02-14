@@ -5,6 +5,19 @@ namespace WebApiProject.Models.Entities
 {
     public class OrderLinesEntity
     {
+        public OrderLinesEntity()
+        {
+
+        }
+        public OrderLinesEntity(int orderId, int productId, int quantity, decimal linePrice)
+        {
+            OrderId = orderId;
+            ProductId = productId;
+            Quantity = quantity;
+            LinePrice = linePrice;
+        }
+
+
         [Key]
         public int Id { get; set; } 
 

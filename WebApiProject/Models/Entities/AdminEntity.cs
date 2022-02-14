@@ -7,6 +7,10 @@ namespace WebApiProject.Models.Entities
 {
     public class AdminEntity
     {
+        public AdminEntity()
+        {
+
+        }
         public int Id { get; set; }
         public string Name { get; set; }
 

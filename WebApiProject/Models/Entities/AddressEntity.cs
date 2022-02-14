@@ -5,6 +5,10 @@ namespace WebApiProject.Models.Entities
 {
     public class AddressEntity
     {
+        public AddressEntity()
+        {
+
+        }
         public AddressEntity(string streetName, string postalCode, string city, string country)
         {
             StreetName = streetName;

@@ -5,6 +5,10 @@ namespace WebApiProject.Models.Entities
 {
     public class ProductEntity
     {
+        public ProductEntity()
+        {
+
+        }
         public ProductEntity(string productName, decimal price, string description, DateTime created, CategoryEntity category)
         {
             ProductName = productName;

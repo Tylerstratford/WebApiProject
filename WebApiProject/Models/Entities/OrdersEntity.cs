@@ -1,9 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApiProject.Models.OrdeModels;
 
 namespace WebApiProject.Models.Entities
 {
     public class OrdersEntity
     {
+      
+        public OrdersEntity()
+        {
+
+        }
+
+        public OrdersEntity(CustomerEntity customer, OrderStatusEntity orderStatus, ICollection<OrderLinesEntity> lines)
+        {
+            Customer = customer;
+            OrderStatus = orderStatus;
+            Lines = lines;
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -12,5 +26,8 @@ namespace WebApiProject.Models.Entities
 
         public CustomerEntity Customer { get; set; }
         public OrderStatusEntity OrderStatus { get; set; }
+
+        //Added in latest migration
+        public ICollection<OrderLinesEntity> Lines { get; set; }
     }
 }
