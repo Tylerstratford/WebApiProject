@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Data;
+using WebApiProject.Filters;
 using WebApiProject.Models.AddressModels;
 using WebApiProject.Models.CustomerModels;
 using WebApiProject.Models.Entities;
@@ -26,6 +27,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer
         [HttpGet]
+        [UseApiKey]
         public async Task<ActionResult<IEnumerable<CustomerModel>>> GetCustomer()
         {
             var items = new List<CustomerModel>();
@@ -52,6 +54,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
+        [UseApiKey]
         public async Task<ActionResult<CustomerModel>> GetCustomerEntity(int id)
         {
             var customerEntity = await _context.Customer.Include(x =>x.Address).FirstOrDefaultAsync(x => x.Id == id);
@@ -80,6 +83,8 @@ namespace WebApiProject.Controllers
         // PUT: api/Customer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [UseAdminApiKey]
+
         public async Task<IActionResult> PutCustomerEntity(int id, CustomerUpdateModel model)
         {
 
@@ -130,6 +135,8 @@ namespace WebApiProject.Controllers
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [UseAdminApiKey]
+
         public async Task<ActionResult<CustomerModel>> PostCustomerEntity(CustomerCreateModel model)
         {
             if (await _context.Customer.AnyAsync(x => x.Email == model.Email))

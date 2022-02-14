@@ -5,6 +5,25 @@ namespace WebApiProject.Models.Entities
 {
     public class ProductEntity
     {
+        public ProductEntity(string productName, decimal price, string description, DateTime created, CategoryEntity category)
+        {
+            ProductName = productName;
+            ArticleNumber = Guid.NewGuid().ToString().Substring(0,8);
+            Price = price;
+            Description = description;
+            Created = created;
+            Category = category;
+        }
+
+        public ProductEntity(string productName, decimal price, string description, DateTime created)
+        {
+            ProductName = productName;
+            ArticleNumber = Guid.NewGuid().ToString().Substring(0, 8);
+            Price = price;
+            Description = description;
+            Created = created;
+        }
+
         [Key]
         public int Id { get; set; }
 

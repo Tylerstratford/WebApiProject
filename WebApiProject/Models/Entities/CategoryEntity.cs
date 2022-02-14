@@ -5,6 +5,11 @@ namespace WebApiProject.Models.Entities
 {
     public class CategoryEntity
     {
+        public CategoryEntity(string categoryName)
+        {
+            CategoryName = categoryName;
+        }
+
         [Key]
         public int Id { get; set; }
 
