@@ -41,6 +41,14 @@ namespace WebApiProject.Models.ProductModels
             Description = description;
         }
 
+        public ProductModel(string productName, string articleNumber, decimal price)
+        {
+            ProductName = productName;
+            ArticleNumber = articleNumber;
+            Price = price;
+
+        }
+
         public int Id { get; set; }
         public string ProductName { get; set; }
         public string ArticleNumber { get; set; }

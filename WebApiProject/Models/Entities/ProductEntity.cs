@@ -28,6 +28,15 @@ namespace WebApiProject.Models.Entities
             Created = created;
         }
 
+        public ProductEntity(string productName, string articleNumber, decimal price, string description, int categoryId)
+        {
+            ProductName= productName;
+            ArticleNumber= articleNumber;
+            Price = price;
+            Description = description;
+            CategoryId = categoryId;
+        }
+
         [Key]
         public int Id { get; set; }
 

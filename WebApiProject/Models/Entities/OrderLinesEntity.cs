@@ -9,6 +9,19 @@ namespace WebApiProject.Models.Entities
         {
 
         }
+
+        public OrderLinesEntity(int quantity,ProductEntity product)
+        {
+            Quantity = quantity;
+            Product = product;
+        }
+
+        public OrderLinesEntity(int productId, int quantity)
+        {
+            ProductId = productId;
+            Quantity = quantity;
+        }
+
         public OrderLinesEntity(int orderId, int productId, int quantity, decimal linePrice)
         {
             OrderId = orderId;

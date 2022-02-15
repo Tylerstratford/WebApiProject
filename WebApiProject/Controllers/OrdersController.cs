@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApiProject.Data;
 using WebApiProject.Models.CustomerModels;
 using WebApiProject.Models.Entities;
-using WebApiProject.Models.OrdeModels;
 using WebApiProject.Models.OrderLinesModels;
+using WebApiProject.Models.OrderModels;
 using WebApiProject.Models.ProductModels;
 using WebApiProject.Models.StatusModels;
 
@@ -106,15 +106,34 @@ namespace WebApiProject.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //POST: api/Orders
+        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrdersEntity>> PostOrdersEntity(OrdersEntity ordersEntity)
+        public async Task<ActionResult<OrderModel>> PostOrdersEntity(OrderCreateModel model)
         {
-            _context.Orders.Add(ordersEntity);
+            List<OrderLinesEntity> Line = new();
+
+            var _customer = await _context.Customer.FindAsync(model.CustomerId);
+            var _status = await _context.OrderStatuses.FindAsync(model.StatusId);
+
+            foreach( var lines in model.Lines)
+            {
+                var _product = await _context.Products.Where(x => x.Id == lines.ProductId).Include(x => x.Category).FirstOrDefaultAsync();
+                //Line.Add(new OrderLinesEntity(lines.Quantity, new ProductEntity(_product.ProductName, _product.ArticleNumber, _product.Price, _product.Description, _product.CategoryId)));
+                Line.Add(new OrderLinesEntity(lines.ProductId, lines.Quantity));
+            }
+
+
+            var orderEntity = new OrdersEntity(
+                _customer,
+                _status,
+                Line);
+
+            _context.Orders.Add(orderEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrdersEntity", new { id = ordersEntity.Id }, ordersEntity);
+            return Ok("Order Created");
+
         }
 
         //DELETE: api/Orders/5

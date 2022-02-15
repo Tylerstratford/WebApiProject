@@ -135,7 +135,7 @@ namespace WebApiProject.Controllers
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [UseAdminApiKey]
+        //[UseAdminApiKey]
 
         public async Task<ActionResult<CustomerModel>> PostCustomerEntity(CustomerCreateModel model)
         {

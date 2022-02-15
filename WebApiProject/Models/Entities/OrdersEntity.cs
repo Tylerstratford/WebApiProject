@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebApiProject.Models.OrdeModels;
 
 namespace WebApiProject.Models.Entities
 {
@@ -23,6 +22,8 @@ namespace WebApiProject.Models.Entities
 
         [Required]
         public int CustomerId { get; set; }
+
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public CustomerEntity Customer { get; set; }
         public OrderStatusEntity OrderStatus { get; set; }
