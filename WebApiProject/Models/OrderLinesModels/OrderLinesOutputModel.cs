@@ -15,11 +15,6 @@ namespace WebApiProject.Models.OrderLinesModels
         public decimal LinePrice { get; set; }  
         public ProductModel Product { get; set; }
 
-        public double LinePriceCalculation(decimal price, int quantity)
-        {
-            decimal LinePrice = price * quantity;
-            return (double)LinePrice;
-        }
     }
     
 }

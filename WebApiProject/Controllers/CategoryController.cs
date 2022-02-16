@@ -65,6 +65,9 @@ namespace WebApiProject.Controllers
                 return BadRequest("No ID entered...");
             }
 
+            if (await _context.Category.AnyAsync(x => x.CategoryName == model.CategoryName))
+                return Conflict("This category already exists");
+
             categoryEntity.CategoryName = model.CategoryName;
 
             _context.Entry(categoryEntity).State = EntityState.Modified;
@@ -85,7 +88,7 @@ namespace WebApiProject.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok($"Category changed to: {model.CategoryName}");
         }
 
         // POST: api/Category

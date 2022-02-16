@@ -49,14 +49,9 @@ namespace WebApiProject.Models.Entities
         [Column(TypeName ="money")]
         public decimal LinePrice { get; set; }
 
-
         public ProductEntity Product { get; set; }
         public OrdersEntity Order { get; set; }
-        public decimal LinePriceCalculation(decimal price, int quantity)
-        {
-            decimal LinePrice = price * quantity;
-            return LinePrice;
-        }
+      
 
     }
 }

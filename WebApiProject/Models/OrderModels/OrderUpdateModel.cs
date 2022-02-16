@@ -20,7 +20,6 @@ namespace WebApiProject.Models.OrderModels
             Updated = updated;
         }
 
-        //public int Id { get; set; }
         public int StatusId { get; set; }     
         public DateTime Updated { get; set; } = DateTime.Now;
     }

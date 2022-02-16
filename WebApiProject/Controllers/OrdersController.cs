@@ -74,7 +74,6 @@ namespace WebApiProject.Controllers
                 return items;
         }
 
-
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderOutputModel>> GetOrdersEntity(int id)
@@ -101,7 +100,6 @@ namespace WebApiProject.Controllers
                         order.Product.ProductName,
                         order.Product.ArticleNumber,
                         order.Product.Price)));
-                
             }
 
             return new OrderOutputModel(
@@ -120,7 +118,6 @@ namespace WebApiProject.Controllers
                         ordersEntity.OrderStatus.Id,
                         ordersEntity.OrderStatus.Status),
                     line);
-
         }
 
 
@@ -184,7 +181,6 @@ namespace WebApiProject.Controllers
                 Line.Add(new OrderLinesEntity(lines.ProductId, lines.Quantity, _linePrice));
             }
 
-            //_line.LinePriceCalculation(_line.Product.Price, _line.Quantity),
             var orderEntity = new OrdersEntity(
                 _customer,
                 _status,

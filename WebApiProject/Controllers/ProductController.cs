@@ -97,6 +97,8 @@ namespace WebApiProject.Controllers
             {
                 productEntity.Category = new CategoryEntity(model.CategoryName);
             }
+            if (await _context.Products.AnyAsync(x => x.ProductName == model.ProductName))
+                return Conflict("A product with this name already exists");
 
             productEntity.ProductName = model.ProductName;
             productEntity.Price = model.Price;

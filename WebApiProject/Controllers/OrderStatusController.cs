@@ -64,6 +64,9 @@ namespace WebApiProject.Controllers
                 return BadRequest("No ID enetered...");
             }
 
+            if (await _context.OrderStatuses.AnyAsync(x => x.Status == model.Status))
+                return Conflict("That status already exists");
+
             orderStatusEntity.Status = model.Status;
 
             _context.Entry(orderStatusEntity).State = EntityState.Modified;
@@ -84,7 +87,7 @@ namespace WebApiProject.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok($"Status changed to: {model.Status}");
         }
 
         // POST: api/OrderStatus
