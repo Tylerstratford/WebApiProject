@@ -28,17 +28,18 @@ namespace WebApiProject.Controllers
         // GET: api/Customer
         [HttpGet]
         //[UseApiKey]
-        public async Task<ActionResult<IEnumerable<CustomerModel>>> GetCustomer()
+        public async Task<ActionResult<IEnumerable<CustomerInfoModel>>> GetCustomer()
         {
-            var items = new List<CustomerModel>();
+            var items = new List<CustomerInfoModel>();
             foreach (var i in await _context.Customer.Include(x => x.Address).ToListAsync())
-                items.Add(new CustomerModel(
+                items.Add(new CustomerInfoModel(
                     i.Id,
                     i.FirstName,
                     i.LastName,
                     i.Email,
                     i.TelephoneNumber,
                     i.DateCreated,
+                    i.DateUpdated,
                     i.AddressId,
                     new AddressModel(
                         i.Address.Id,
