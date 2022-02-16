@@ -27,7 +27,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer
         [HttpGet]
-        [UseApiKey]
+        //[UseApiKey]
         public async Task<ActionResult<IEnumerable<CustomerModel>>> GetCustomer()
         {
             var items = new List<CustomerModel>();
@@ -54,7 +54,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
-        [UseApiKey]
+        //[UseApiKey]
         public async Task<ActionResult<CustomerModel>> GetCustomerEntity(int id)
         {
             var customerEntity = await _context.Customer.Include(x =>x.Address).FirstOrDefaultAsync(x => x.Id == id);

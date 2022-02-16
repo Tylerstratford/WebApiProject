@@ -24,9 +24,13 @@ namespace WebApiProject.Models.Entities
         public int CustomerId { get; set; }
 
         public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime Updated { get; set; } = DateTime.Now;
 
         public CustomerEntity Customer { get; set; }
+
+        public int OrderStatusId { get; set; }
         public OrderStatusEntity OrderStatus { get; set; }
+        
 
         //Added in latest migration
         public ICollection<OrderLinesEntity> Lines { get; set; }

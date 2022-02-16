@@ -22,6 +22,7 @@ namespace WebApiProject.Models.OrderModels
             Lines = lines;
         }
 
+       
         public int Id { get; set; }
 
         public CustomerModel Customer { get; set; }

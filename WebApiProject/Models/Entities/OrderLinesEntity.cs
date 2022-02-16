@@ -16,10 +16,11 @@ namespace WebApiProject.Models.Entities
             Product = product;
         }
 
-        public OrderLinesEntity(int productId, int quantity)
+        public OrderLinesEntity(int productId, int quantity, decimal linePrice)
         {
             ProductId = productId;
             Quantity = quantity;
+            LinePrice = linePrice;
         }
 
         public OrderLinesEntity(int orderId, int productId, int quantity, decimal linePrice)
@@ -51,5 +52,11 @@ namespace WebApiProject.Models.Entities
 
         public ProductEntity Product { get; set; }
         public OrdersEntity Order { get; set; }
+        public decimal LinePriceCalculation(decimal price, int quantity)
+        {
+            decimal LinePrice = price * quantity;
+            return LinePrice;
+        }
+
     }
 }

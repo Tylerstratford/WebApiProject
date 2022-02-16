@@ -16,7 +16,7 @@ namespace WebApiProject.Models.OrderLinesModels
             Quantity = quantity;
         }
 
-        public OrderLinesModel(int quantity, decimal linePrice, ProductModel product)
+        public OrderLinesModel(int quantity, decimal linePrice, ProductOutputModel product)
         {
          
             Quantity = quantity;
@@ -24,24 +24,24 @@ namespace WebApiProject.Models.OrderLinesModels
             Product = product;
         }
 
+        public OrderLinesModel(int id, int orderId, int productId, int quantity, decimal linePrice, ProductOutputModel product)
+        {
+            Id = id;
+            OrderId = orderId;
+            ProductId = productId;
+            Quantity = quantity;
+            LinePrice= linePrice;
+            Product = product;
+        }
+
         public int Id { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public decimal LinePrice { get; set; }
-        //{
-        //    get { return LinePrice; }
-        //    set { LinePrice = Product.Price * Quantity; }
-        //}
-        
-        public ProductModel Product { get; set; }
-        public OrderModel Order { get; set; }
+        public decimal LinePrice { get; set; }  
+        public ProductOutputModel Product { get; set; }
 
     }
 
-    //public double Amount(decimal price)
-    //{
-    //    decimal LinePrice = LinePrice * price;
-    //    return (double)LinePrice;
-    //}
+  
 }
