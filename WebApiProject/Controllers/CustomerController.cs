@@ -156,9 +156,10 @@ namespace WebApiProject.Controllers
             if (address != null)
             {
                 customerEntity.AddressId = address.Id;
-            } else
+            }
+            else
             {
-                customerEntity.Address = new AddressEntity(model.StreetName, model.PostalCode,model.City,model.Country);
+                customerEntity.Address = new AddressEntity(model.StreetName, model.PostalCode, model.City, model.Country);
             }
 
             _context.Customer.Add(customerEntity);
@@ -169,7 +170,7 @@ namespace WebApiProject.Controllers
                 customerEntity.LastName,
                 customerEntity.Email,
                 customerEntity.TelephoneNumber,
-                customerEntity.DateCreated, 
+                customerEntity.DateCreated,
                 customerEntity.AddressId,
                 new AddressModel(
                     customerEntity.Address.Id,

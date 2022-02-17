@@ -7,7 +7,7 @@ namespace WebApiProject.Models.OrderModels
 {
     public class OrderOutputModel
     {
-        public OrderOutputModel(int id, DateTime created, DateTime updated, CustomerOutputModel customer, AddressModel address, StatusModel orderStatus, ICollection<OrderLinesModel> lines)
+        public OrderOutputModel(int id, DateTime created, DateTime updated, CustomerOutputModel customer, AddressModel address, StatusModel orderStatus, ICollection<OrderLinesOutputModel> lines)
         {
             Id = id;
             Created = created;
@@ -25,6 +25,6 @@ namespace WebApiProject.Models.OrderModels
         public StatusModel OrderStatus { get; set; }
 
         public AddressModel Address { get; set; }
-        public ICollection<OrderLinesModel> Lines { get; set; }
+        public ICollection<OrderLinesOutputModel> Lines { get; set; }
     }
 }

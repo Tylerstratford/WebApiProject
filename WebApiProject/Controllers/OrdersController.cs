@@ -38,11 +38,12 @@ namespace WebApiProject.Controllers
             foreach (var i in await _context.Orders.Include(x => x.Customer).ThenInclude(x => x.Address).Include(x => x.Lines).Include(x => x.OrderStatus).ToListAsync()) 
             {
 
-                var line = new List<OrderLinesModel>();
+                var line = new List<OrderLinesOutputModel>();
+
                 foreach (var _line in i.Lines.Where(x => x.OrderId == i.Id))
                 {
                     var _product = await _context.Products.Where(x => x.Id == _line.ProductId).FirstOrDefaultAsync();
-                    line.Add(new OrderLinesModel(
+                    line.Add(new OrderLinesOutputModel(
                         _line.Id,
                         _line.OrderId,
                         _line.ProductId,
@@ -85,11 +86,11 @@ namespace WebApiProject.Controllers
                 return NotFound();
             }
 
-            var line = new List<OrderLinesModel>();
+            var line = new List<OrderLinesOutputModel>();
 
             foreach (var order in ordersEntity.Lines)
             {
-                line.Add(new OrderLinesModel(
+                line.Add(new OrderLinesOutputModel(
                     order.ProductId,
                     order.OrderId,
                     order.ProductId,

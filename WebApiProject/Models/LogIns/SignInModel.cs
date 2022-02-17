@@ -1,6 +1,6 @@
 ﻿namespace WebApiProject.Models.LogIns
 {
-    public class SignIn
+    public class SignInModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

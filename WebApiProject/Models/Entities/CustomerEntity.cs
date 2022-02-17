@@ -78,7 +78,7 @@ namespace WebApiProject.Models.Entities
         {
             using (var hmac = new HMACSHA512(Salt))
             {
-                var _hash = hmac.ComputeHash(hmac.ComputeHash(Encoding.UTF8.GetBytes(password)));
+                var _hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < _hash.Length; i++)
                     if(_hash[i] != _hash[i])
                         return false;
