@@ -4,7 +4,7 @@
 
 namespace WebApiProject.Migrations
 {
-    public partial class orderstatusidadded : Migration
+    public partial class init2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

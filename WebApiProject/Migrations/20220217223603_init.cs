@@ -125,6 +125,8 @@ namespace WebApiProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

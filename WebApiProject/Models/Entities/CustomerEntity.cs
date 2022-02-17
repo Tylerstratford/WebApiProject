@@ -57,14 +57,15 @@ namespace WebApiProject.Models.Entities
 
 
         [Required, Column(TypeName = "varbinary(max)")]
-        public byte[] Hash { get; set; } //Hash name should be changed
+        public byte[] Hash { get; private set; } //Hash name should be changed
 
         [Required, Column (TypeName = "varbinary(max)")]
-        public byte[] Salt { get; set; } //Salt name should be changed
+        public byte[] Salt { get; private set; } //Salt name should be changed
 
         public ICollection<OrdersEntity> OrdersList { get; set; }
 
-        public void CreateSecurePassword(string password) {
+        public void CreateSecurePassword(string password)
+        {
             using (var hmac = new HMACSHA512())
             {
                 Salt = hmac.Key;
@@ -80,7 +81,7 @@ namespace WebApiProject.Models.Entities
             {
                 var _hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < _hash.Length; i++)
-                    if(_hash[i] != _hash[i])
+                    if(_hash[i] != Hash[i])
                         return false;
 
                     return true;

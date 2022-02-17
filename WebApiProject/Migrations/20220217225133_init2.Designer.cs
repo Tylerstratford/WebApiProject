@@ -12,8 +12,8 @@ using WebApiProject.Data;
 namespace WebApiProject.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20220215194957_date updated address entity")]
-    partial class dateupdatedaddressentity
+    [Migration("20220217225133_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

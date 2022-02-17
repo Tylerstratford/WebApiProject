@@ -12,7 +12,7 @@ using WebApiProject.Data;
 namespace WebApiProject.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20220214194714_init")]
+    [Migration("20220217223603_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,11 +180,17 @@ namespace WebApiProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
