@@ -15,7 +15,7 @@ namespace WebApiProject.Models.CustomerModels
         private string postalCode;
         private string city;
         private string country;
-
+        
 
         public string FirstName { 
             get { return firstName; }
