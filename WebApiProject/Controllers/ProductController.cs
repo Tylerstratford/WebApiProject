@@ -17,8 +17,8 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    [UseAdminApiKey]
+    //[Authorize]
+    //[UseAdminApiKey]
     public class ProductController : ControllerBase
     {
         private readonly SqlContext _context;
