@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [UseApiKey]
     public class CustomerController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -27,7 +30,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Customer
         [HttpGet]
-        //[UseApiKey]
+        [UseAdminApiKey]
         public async Task<ActionResult<IEnumerable<CustomerInfoModel>>> GetCustomer()
         {
             var items = new List<CustomerInfoModel>();
@@ -51,11 +54,9 @@ namespace WebApiProject.Controllers
             return items;
         }
 
-
-
         // GET: api/Customer/5
         [HttpGet("{id}")]
-        //[UseApiKey]
+        [UseAdminApiKey]
         public async Task<ActionResult<CustomerModel>> GetCustomerEntity(int id)
         {
             var customerEntity = await _context.Customer.Include(x =>x.Address).FirstOrDefaultAsync(x => x.Id == id);
@@ -82,10 +83,7 @@ namespace WebApiProject.Controllers
         }
 
         // PUT: api/Customer/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [UseAdminApiKey]
-
         public async Task<IActionResult> PutCustomerEntity(int id, CustomerUpdateModel model)
         {
 
@@ -134,10 +132,8 @@ namespace WebApiProject.Controllers
         }
 
         // POST: api/Customer
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        //[UseAdminApiKey]
-
+        [UseAdminApiKey]
         public async Task<ActionResult<CustomerModel>> PostCustomerEntity(CustomerCreateModel model)
         {
             if (await _context.Customer.AnyAsync(x => x.Email == model.Email))
@@ -180,11 +176,9 @@ namespace WebApiProject.Controllers
                     customerEntity.Address.Country)));
         }
 
-
-
-
         // DELETE: api/Customer/5
         [HttpDelete("{id}")]
+        [UseAdminApiKey]
         public async Task<IActionResult> DeleteCustomerEntity(int id)
         {
             var customerEntity = await _context.Customer.FindAsync(id);

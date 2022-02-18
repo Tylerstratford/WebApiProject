@@ -28,6 +28,7 @@ namespace WebApiProject.Controllers
         }
 
         [HttpPost("SignUp")]
+        //Not sure if ApiKey is needed here... depending on how/what the Api is used for. If the product is free then users should be able to sign up without a API key, if the product costs money to use then they should need an API key to sign up there information
         public async Task<ActionResult> SignUp(SignUpModel m)
         {
             if (await _context.Customer.AnyAsync(x => x.Email == m.Email))
@@ -72,6 +73,7 @@ namespace WebApiProject.Controllers
 
         [HttpPost("SignInCustomer")]
         [UseApiKey]
+        [UseCustomerApiKey]
         public async Task<ActionResult> SignInCustomer(SignInModel m)
         {
             if (string.IsNullOrEmpty(m.Email) || string.IsNullOrEmpty(m.Password))

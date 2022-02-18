@@ -17,6 +17,8 @@ namespace WebApiProject.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [UseApiKey]
+    [UseAdminApiKey]
     public class OrderStatusController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -28,7 +30,6 @@ namespace WebApiProject.Controllers
 
         // GET: api/OrderStatus
         [HttpGet]
-        [UseApiKey]
         public async Task<ActionResult<IEnumerable<StatusModel>>> GetOrderStatuses()
         {
             var items = new List<StatusModel>();

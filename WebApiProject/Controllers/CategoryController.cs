@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Data;
+using WebApiProject.Filters;
 using WebApiProject.Models.CategoryModels;
 using WebApiProject.Models.Entities;
 
@@ -14,6 +16,9 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [UseApiKey]
+    [UseAdminApiKey]
     public class CategoryController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -50,7 +55,6 @@ namespace WebApiProject.Controllers
         }
 
         // PUT: api/Category/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategoryEntity(int id, CategoryUpdateModel model)
         {
@@ -92,7 +96,6 @@ namespace WebApiProject.Controllers
         }
 
         // POST: api/Category
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CategoryModel>> PostCategoryEntity(CategoryCreateModel model)
         {

@@ -18,6 +18,7 @@ namespace WebApiProject.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [UseAdminApiKey]
     public class ProductController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -29,7 +30,6 @@ namespace WebApiProject.Controllers
 
         // GET: api/Product
         [HttpGet]
-        [UseAdminApiKey]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
            var items = new List<ProductModel>();
@@ -52,7 +52,6 @@ namespace WebApiProject.Controllers
 
         // GET: api/Product/5
         [HttpGet("{id}")]
-        [UseAdminApiKey]
         public async Task<ActionResult<ProductModel>> GetProductEntity(int id)
         {
             var productEntity = await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);  
@@ -78,7 +77,6 @@ namespace WebApiProject.Controllers
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        [UseAdminApiKey]
         public async Task<IActionResult> PutProductEntity(int id, ProductUpdateModel model)
         {
             if (id != model.Id)
@@ -134,7 +132,6 @@ namespace WebApiProject.Controllers
 
         // POST: api/Product
         [HttpPost]
-        [UseAdminApiKey]
         public async Task<ActionResult<ProductModel>> PostProductEntity(ProductCreateModel model)
         {
             if (await _context.Products.AnyAsync(x => x.ProductName == model.ProductName))
@@ -173,7 +170,6 @@ namespace WebApiProject.Controllers
 
         // DELETE: api/Product/5
         [HttpDelete("{id}")]
-        [UseAdminApiKey]
         public async Task<IActionResult> DeleteProductEntity(int id)
         {
             var productEntity = await _context.Products.FindAsync(id);

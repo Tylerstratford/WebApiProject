@@ -21,6 +21,8 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [UseApiKey]
     public class OrdersController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -32,6 +34,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Orders
         [HttpGet]
+        [UseAdminApiKey]
         public async Task<ActionResult<IEnumerable<OrderOutputModel>>> GetOrders()
         {
             var items = new List<OrderOutputModel>();
@@ -79,6 +82,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
+        [UseAdminApiKey]
         public async Task<ActionResult<OrderOutputModel>> GetOrdersEntity(int id)
         {
             var ordersEntity = await _context.Orders.Include(x => x.Customer).ThenInclude(x => x.Address).Include(x => x.Lines).ThenInclude(x => x.Product).Include(x => x.OrderStatus).FirstOrDefaultAsync(x => x.Id == id);
@@ -127,6 +131,7 @@ namespace WebApiProject.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [UseAdminApiKey]
         public async Task<IActionResult> PutOrdersEntity(int id, OrderUpdateModel model)
         {
             var ordersEntity = await _context.Orders.Where(x => x.Id == id).Include(x => x.OrderStatus).FirstOrDefaultAsync();
@@ -167,10 +172,8 @@ namespace WebApiProject.Controllers
         }
 
         //POST: api/Orders
-        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize]
-        [UseApiKey]
+     
         public async Task<ActionResult<OrderModel>> PostOrdersEntity(OrderCreateModel model)
         {
             List<OrderLinesEntity> Line = new();
@@ -200,6 +203,7 @@ namespace WebApiProject.Controllers
 
         //DELETE: api/Orders/5
         [HttpDelete("{id}")]
+        [UseAdminApiKey]
         public async Task<IActionResult> DeleteOrdersEntity(int id)
         {
             var ordersEntity = await _context.Orders.FindAsync(id);
