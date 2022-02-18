@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Data;
+using WebApiProject.Filters;
 using WebApiProject.Models.CategoryModels;
 using WebApiProject.Models.Entities;
 using WebApiProject.Models.ProductModels;
@@ -15,6 +17,7 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -26,6 +29,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Product
         [HttpGet]
+        [UseAdminApiKey]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
            var items = new List<ProductModel>();
@@ -48,6 +52,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Product/5
         [HttpGet("{id}")]
+        [UseAdminApiKey]
         public async Task<ActionResult<ProductModel>> GetProductEntity(int id)
         {
             var productEntity = await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);  
@@ -72,8 +77,8 @@ namespace WebApiProject.Controllers
         }
 
         // PUT: api/Product/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [UseAdminApiKey]
         public async Task<IActionResult> PutProductEntity(int id, ProductUpdateModel model)
         {
             if (id != model.Id)
@@ -97,8 +102,7 @@ namespace WebApiProject.Controllers
             {
                 productEntity.Category = new CategoryEntity(model.CategoryName);
             }
-            if (await _context.Products.AnyAsync(x => x.ProductName == model.ProductName))
-                return Conflict("A product with this name already exists");
+   
 
             productEntity.ProductName = model.ProductName;
             productEntity.Price = model.Price;
@@ -129,8 +133,8 @@ namespace WebApiProject.Controllers
         }
 
         // POST: api/Product
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [UseAdminApiKey]
         public async Task<ActionResult<ProductModel>> PostProductEntity(ProductCreateModel model)
         {
             if (await _context.Products.AnyAsync(x => x.ProductName == model.ProductName))
@@ -169,6 +173,7 @@ namespace WebApiProject.Controllers
 
         // DELETE: api/Product/5
         [HttpDelete("{id}")]
+        [UseAdminApiKey]
         public async Task<IActionResult> DeleteProductEntity(int id)
         {
             var productEntity = await _context.Products.FindAsync(id);
@@ -183,7 +188,7 @@ namespace WebApiProject.Controllers
             productEntity.Description = "Deleted";
             productEntity.Updated = DateTime.Now;
 
-            _context.Products.Remove(productEntity);
+            _context.Entry(productEntity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();

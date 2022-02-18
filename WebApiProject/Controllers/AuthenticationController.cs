@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebApiProject.Data;
+using WebApiProject.Filters;
 using WebApiProject.Models.Entities;
 using WebApiProject.Models.LogIns;
 
@@ -52,8 +53,26 @@ namespace WebApiProject.Controllers
                 return Ok("Customer created");
         }
 
-        [HttpPost("SignIn")]
-        public async Task<ActionResult> SignIn(SignInModel m)
+        [HttpPost("SignUpAdmin")]
+        [UseAdminApiKey]
+        public async Task<ActionResult> SignUpAdmin(SignUpAdminModel m)
+        {
+            if (await _context.Admins.AnyAsync(x => x.Email == m.Email))
+                return BadRequest("An admin with this email address already exists");
+
+            var adminEntity = new AdminEntity(m.FirstName, m.LastName, m.Email);
+            adminEntity.CreateSecurePassword(m.Password);
+
+            _context.Admins.Add(adminEntity);
+            await _context.SaveChangesAsync();
+
+            return Ok("Admin created");
+        }
+
+
+        [HttpPost("SignInCustomer")]
+        [UseApiKey]
+        public async Task<ActionResult> SignInCustomer(SignInModel m)
         {
             if (string.IsNullOrEmpty(m.Email) || string.IsNullOrEmpty(m.Password))
                 return BadRequest("Please provide an email and password");
@@ -67,8 +86,10 @@ namespace WebApiProject.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, customerEntity.Email),
                     new Claim("id", customerEntity.Id.ToString()),
+                    new Claim(ClaimTypes.Name, customerEntity.Email),
+                    new Claim("code", _configuration.GetValue<string>("ApiKey")),
+                    new Claim("code", _configuration.GetValue<string>("CustomerApiKey"))
                 }),
                 Expires = DateTime.Now.AddMinutes(1),
                 SigningCredentials = new SigningCredentials(
@@ -80,6 +101,36 @@ namespace WebApiProject.Controllers
             return Ok(tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor)));
         }
 
+        [HttpPost("SignInAdmin")]
+        [UseAdminApiKey]
+        public async Task<ActionResult> SignInAdmin(SignInModel m)
+        {
+            if (string.IsNullOrEmpty(m.Email) || string.IsNullOrEmpty(m.Password))
+                return BadRequest("Please provide an email and password");
+
+            var adminEntity = await _context.Admins.FirstOrDefaultAsync(x => x.Email == m.Email);
+            if (adminEntity == null || !adminEntity.CompareSecurePassword(m.Password))
+                return BadRequest("Incorrect email address or password");
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("id", adminEntity.Id.ToString()),
+                    new Claim(ClaimTypes.Name, adminEntity.Email),
+                    new Claim("code", _configuration.GetValue<string>("ApiKey")),
+                    new Claim("code", _configuration.GetValue<string>("AdminApiKey"))
+                }),
+                Expires = DateTime.Now.AddMinutes(1),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Secret"))),
+                    SecurityAlgorithms.HmacSha512Signature
+                    )
+            };
+
+            return Ok(tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor)));
+        }
 
     }
 }

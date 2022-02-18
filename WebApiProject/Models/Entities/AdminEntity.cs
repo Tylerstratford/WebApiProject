@@ -11,8 +11,27 @@ namespace WebApiProject.Models.Entities
         {
 
         }
+
+        public AdminEntity(string name, string lastName, string email)
+        {
+            Name = name;
+            LastName = lastName;
+            Email = email;
+        }
+
         public int Id { get; set; }
+
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
         public string Name { get; set; }
+
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Column(TypeName = "varchar(50)")]
+        public string Email { get; set; }
 
         [Required, Column(TypeName = "varbinary(max)")]
         public byte[] Hash { get; set; } //Hash name should be changed
@@ -35,9 +54,9 @@ namespace WebApiProject.Models.Entities
         {
             using (var hmac = new HMACSHA512(Salt))
             {
-                var _hash = hmac.ComputeHash(hmac.ComputeHash(Encoding.UTF8.GetBytes(password)));
+                var _hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < _hash.Length; i++)
-                    if (_hash[i] != _hash[i])
+                    if (_hash[i] != Hash[i])
                         return false;
 
                 return true;

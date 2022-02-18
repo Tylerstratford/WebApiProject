@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Data;
+using WebApiProject.Filters;
 using WebApiProject.Models.AddressModels;
 using WebApiProject.Models.CustomerModels;
 using WebApiProject.Models.Entities;
@@ -167,6 +169,8 @@ namespace WebApiProject.Controllers
         //POST: api/Orders
         //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
+        [UseApiKey]
         public async Task<ActionResult<OrderModel>> PostOrdersEntity(OrderCreateModel model)
         {
             List<OrderLinesEntity> Line = new();
