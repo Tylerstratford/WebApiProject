@@ -10,4 +10,4 @@ To create an order: </br>
   A product needs to exist in the database (Product -  POST) </br>
   A status needs to exist in the database (Status - POST) </br>
 <h3>Known bugs</h3>
-When updating the price and name of a product (PUT), existings <strong>orders</strong> will also have their price and product name changed, however the line price does not reflect the change. This is a bug and not intentional. Updating a product should not make any changes in old/existing orders. <strong>orders</strong created after the product has been edited work as intended.
+When updating the price and name of a product (PUT), existings <strong>orders</strong> will also have their price and product name changed, however the line price does not reflect the change. This is a bug and not intentional. Updating a product should not make any changes in old/existing orders. <strong>orders</strong> created after the product has been edited work as intended.
