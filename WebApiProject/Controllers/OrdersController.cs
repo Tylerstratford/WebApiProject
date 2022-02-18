@@ -21,8 +21,8 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    [UseApiKey]
+    //[Authorize]
+    //[UseApiKey]
     public class OrdersController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -34,7 +34,7 @@ namespace WebApiProject.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        [UseAdminApiKey]
+        //[UseAdminApiKey]
         public async Task<ActionResult<IEnumerable<OrderOutputModel>>> GetOrders()
         {
             var items = new List<OrderOutputModel>();
@@ -75,7 +75,8 @@ namespace WebApiProject.Controllers
                     new StatusModel(
                         i.OrderStatus.Id,
                         i.OrderStatus.Status),
-                    line));
+                    line,
+                    i.Total));
                     }
                 return items;
         }
@@ -124,7 +125,8 @@ namespace WebApiProject.Controllers
                     new StatusModel(
                         ordersEntity.OrderStatus.Id,
                         ordersEntity.OrderStatus.Status),
-                    line);
+                    line,
+                    ordersEntity.Total);
         }
 
 
@@ -189,9 +191,17 @@ namespace WebApiProject.Controllers
                 Line.Add(new OrderLinesEntity(lines.ProductId, lines.Quantity, _linePrice));
             }
 
+            decimal total = 0;
+
+            foreach (var line in Line)
+            {
+                total += line.LinePrice;
+            }
+
             var orderEntity = new OrdersEntity(
                 _customer,
                 _status,
+                total,
                 Line);
 
             _context.Orders.Add(orderEntity);

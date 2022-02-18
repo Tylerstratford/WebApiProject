@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApiProject.Models.Entities
 {
@@ -10,10 +11,11 @@ namespace WebApiProject.Models.Entities
 
         }
 
-        public OrdersEntity(CustomerEntity customer, OrderStatusEntity orderStatus, ICollection<OrderLinesEntity> lines)
+        public OrdersEntity(CustomerEntity customer, OrderStatusEntity orderStatus, decimal total, ICollection<OrderLinesEntity> lines)
         {
             Customer = customer;
             OrderStatus = orderStatus;
+            Total = total;
             Lines = lines;
         }
 
@@ -31,7 +33,11 @@ namespace WebApiProject.Models.Entities
         public int OrderStatusId { get; set; }
 
         public OrderStatusEntity OrderStatus { get; set; }
-        
+
+        [Required]
+        [Column(TypeName = "money")]
+        public decimal Total { get; set; }
+
         public ICollection<OrderLinesEntity> Lines { get; set; }
     }
 }
