@@ -1,9 +1,9 @@
 # WebApiProject
 <h3>Api Keys:</h3> 
-* ApiKey: "dGhpcyBpcyBteSBjb2RlLCBob3cgYWJvdXQgdGhhdA==" - To everyone - Query </br>
-   "AdminApiKey": "bGV0cyBkbyBzb21lIGVjb2RpbmcgaG93IGFib3V0IHRoYXQ==" - Only admin - Header </br>
-   "Secret": "VGhpcyBpcyBteSBzZWNyZXQga2V5IHRvIG15IGFwaQo==" - Secret after logging in - Bearer Token </br>
-   "CustomerApiKey": "dGhpcyBpcyBteSBjdXN0b21lciBrZXk==" - Only customer -Header </br>
+<li> ApiKey: "dGhpcyBpcyBteSBjb2RlLCBob3cgYWJvdXQgdGhhdA==" - To everyone - Query </li>
+<li>"AdminApiKey": "bGV0cyBkbyBzb21lIGVjb2RpbmcgaG93IGFib3V0IHRoYXQ==" - Only admin - Header </li>
+<li>"Secret": "VGhpcyBpcyBteSBzZWNyZXQga2V5IHRvIG15IGFwaQo==" - Secret after logging in - Bearer Token </li>
+<li>"CustomerApiKey": "dGhpcyBpcyBteSBjdXN0b21lciBrZXk==" - Only customer -Header </li>
 <h3>Getting started:</h3>
 To create an order: </br>
   A customer needs to exist in the database (Customer - POST) </br>
