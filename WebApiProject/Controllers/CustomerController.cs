@@ -82,6 +82,7 @@ namespace WebApiProject.Controllers
                     customerEntity.Address.Country));
         }
 
+        //Logged in customer with API key can edit customer -  intended
         // PUT: api/Customer/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomerEntity(int id, CustomerUpdateModel model)

@@ -17,8 +17,8 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
-    //[UseAdminApiKey]
+    [Authorize]
+    [UseAdminApiKey]
     public class ProductController : ControllerBase
     {
         private readonly SqlContext _context;
@@ -27,7 +27,7 @@ namespace WebApiProject.Controllers
         {
             _context = context;
         }
-
+        //Not susre whether products GET should be visiable to everyone, depends on the usage. I will leave them locked to the admin and log in
         // GET: api/Product
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
@@ -50,6 +50,7 @@ namespace WebApiProject.Controllers
             return items;
         }
 
+        //Same as above, depends on the usage. I will leave them locked to the admin and log in
         // GET: api/Product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductModel>> GetProductEntity(int id)
